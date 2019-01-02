@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.ReplyMapper">
+  	<select id="list" resultType="ReplyVO">
+  		SELECT
+  		*
+  		FROM
+  		TB1_REPLY
+  		WHERE BNO = #{bno}
+  		ORDER BY RNO DESC
+  	</select>
+	
+	<insert id="create">
+		INSERT INTO TB1_REPLY(BNO, REPLYTEXT, REPLYER)
+		VALUES (#{bno}, #{replytext}, #{replyer})
+	</insert>
+	
+	<update id="update">
+		UPDATE TB1_REPLY SET REPLYTEXT = #{replytext}, updatedate = now()
+		where rno = #{rno}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM TB1_REPLY WHERE RNO = #{rno}
+	</delete>
+
+	<delete id="deleteAll">
+		DELETE FROM TB1_REPLY WHERE BNO = #{bno}
+	</delete>
+	
+	<select id="listPage" resultType="ReplyVO">
+		 select 
+		   *
+		 from 
+		   tb1_reply 
+		 where bno = #{bno} 
+		 order by rno desc
+		 limit #{cri.pageStart}, #{cri.perPageNum}
+ 	</select>    
+ 	
+ 	<select id="count" resultType="int">
+ 		select count(bno) from tb1_reply where bno = #{bno}
+ 	</select>
+ 	
+ 	<select id="getBno" resultType="int">
+ 		select bno from tb1_reply where rno = #{rno}
+ 	</select>
+</mapper>
+
